@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lehlogonolo Makwela — Web Developer</title>
+  <meta name="description" content="Portfolio — Lehlogonolo Makwela. Final-year software Developer. Projects, source code and demo videos." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f9fbff; --card:#ffffff; --muted:#6b7280; --accent:#2563eb; --glass: rgba(37,99,235,0.08);
+      --radius:16px; --maxw:1100px; --gap:24px; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg);color:#0b1220}
+    a{color:inherit}
+
+    /* ---------- LAYOUT ---------- */
+    .container{max-width:var(--maxw);margin:0 auto;padding:36px}
+    nav{position:fixed;left:0;right:0;top:16px;display:flex;justify-content:center;z-index:60}
+    .nav-inner{width:100%;max-width:var(--maxw);background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));backdrop-filter:blur(8px);border-radius:14px;padding:10px 18px;box-shadow:0 6px 24px rgba(16,24,40,0.08);display:flex;align-items:center;gap:12px}
+    .brand{font-weight:800;color:var(--accent);letter-spacing:-0.3px}
+    .nav-links{margin-left:auto;display:flex;gap:12px}
+    .nav-links a{padding:8px 12px;border-radius:10px;font-weight:600;color:#0b1220;text-decoration:none}
+    .nav-links a.active, .nav-links a:hover{background:var(--glass);color:var(--accent)}
+
+    /* ---------- HERO ---------- */
+    header.hero{min-height:86vh;display:grid;grid-template-columns:1fr 420px;align-items:center;gap:40px;padding-top:60px}
+    .hero-left{padding:40px}
+    .typing {font-size:2.6rem;font-weight:800;line-height:1.02;display:flex;gap:8px;align-items:center}
+    .typing .cursor{width:10px;height:40px;background:var(--accent);display:inline-block;border-radius:4px;animation:blink 1s steps(2) infinite}
+    @keyframes blink{50%{opacity:0}}
+    .lead{margin-top:18px;color:var(--muted);max-width:56ch;font-size:1.05rem}
+    .hero-cta{margin-top:24px;display:flex;gap:12px}
+    .btn-primary{background:var(--accent);color:white;padding:12px 18px;border-radius:12px;font-weight:700;box-shadow:0 8px 20px rgba(37,99,235,0.12);text-decoration:none}
+    .btn-ghost{background:transparent;padding:10px 16px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);font-weight:600;text-decoration:none}
+
+    .hero-right{display:grid;place-items:center}
+    .profile {width:320px;height:320px;border-radius:50%;object-fit:cover;border:10px solid rgba(37,99,235,0.08);box-shadow:0 20px 60px rgba(37,99,235,0.08);transform:translateY(0);transition:transform 0.6s}
+    .profile:hover{transform:translateY(-8px) rotate(-1deg)}
+
+    /* decorative blobs */
+    .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:0.45;z-index:0}
+    .blob.a{width:420px;height:420px;background:linear-gradient(135deg,#a5b4fc,#60a5fa);top:-80px;left:-120px}
+    .blob.b{width:300px;height:300px;background:linear-gradient(135deg,#ffd7a6,#ffb4b4);bottom:-60px;right:-140px}
+
+    /* ---------- SECTIONS ---------- */
+    section{padding:100px 0}
+    section .inner{display:flex;gap:var(--gap);align-items:flex-start}
+    section h2{font-size:2rem;margin:0 0 6px 0}
+    section p.lead-muted{color:var(--muted);max-width:64ch}
+
+    /* Skills */
+    .skills {display:flex;flex-wrap:wrap;gap:14px;margin-top:18px}
+    .pill{background:linear-gradient(180deg, rgba(255,255,255,0.9), #fff);padding:10px 14px;border-radius:999px;border:1px solid rgba(11,18,32,0.04);font-weight:600}
+
+    /* Projects grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .card{background:var(--card);border-radius:14px;padding:14px;border:1px solid rgba(11,18,32,0.04);box-shadow:0 6px 20px rgba(16,24,40,0.04);overflow:hidden;display:flex;flex-direction:column}
+    .card .thumb{height:160px;background:#eef4ff;border-radius:10px;overflow:hidden}
+    .card img{width:100%;height:100%;object-fit:cover;display:block}
+    .card h3{margin:12px 0 6px 0}
+    .card p{color:var(--muted);flex:1}
+    .card .row{display:flex;gap:10px;align-items:center;margin-top:12px}
+    .tag{background:rgba(37,99,235,0.08);color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px}
+    .card .actions{margin-left:auto;display:flex;gap:8px}
+
+    /* project modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:24px;z-index:120}
+    .modal{width:100%;max-width:1000px;background:white;border-radius:12px;overflow:hidden}
+    .modal iframe{width:100%;height:560px;border:0}
+
+    /* Contact */
+    .contact-card{background:linear-gradient(180deg, rgba(255,255,255,0.9), #fff);padding:28px;border-radius:14px;border:1px solid rgba(11,18,32,0.04);box-shadow:0 20px 40px rgba(16,24,40,0.06)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+    .contact-item{display:flex;gap:12px;align-items:center}
+    .icon{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#eff6ff,#fff0f6);display:grid;place-items:center;font-size:22px}
+    .contact-cta{margin-top:18px}
+
+    /* Footer */
+    footer{padding:26px 0;text-align:center;color:var(--muted);font-size:14px}
+
+    /* small screens */
+    @media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)};header.hero{grid-template-columns:1fr 320px}}
+    @media (max-width:740px){.grid{grid-template-columns:1fr};nav .nav-inner{padding:8px 12px}.nav-links{display:none};header.hero{grid-template-columns:1fr;padding-top:46px}.hero-right{display:none}}
+
+    /* reveal on scroll */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity 600ms ease, transform 600ms ease}
+    .reveal.visible{opacity:1;transform:none}
+
+  </style>
+</head>
+<body>
+  <!-- decorative blobs -->
+  <div class="blob a"></div>
+  <div class="blob b"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner container">
+      <div class="brand">Lehlogonolo SJ Makwela</div>
+      <div class="nav-links" id="navLinks">
+        <a href="#" data-target="hero" class="active">Home</a>
+        <a href="#" data-target="about">About</a>
+        <a href="#" data-target="projects">Projects</a>
+        <a href="#" data-target="contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- HERO -->
+    <header class="hero" id="hero">
+      <div class="hero-left">
+        <div class="typing reveal" id="typingWrap">
+          <div id="typedText"></div>
+          <div class="cursor"></div>
+        </div>
+        <p class="lead reveal">Final-year Software Developer driven by a love for helping people through technology. </p>
+
+        <div class="hero-cta reveal">
+          <a class="btn-primary" href="#projects">See Projects</a>
+          <a class="btn-ghost" href="/images/lehlogonolo-makwela-cv.pdf" download>Download CV</a>
+        </div>
+
+        <div style="margin-top:28px" class="reveal">
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:12px;height:12px;background:#34d399;border-radius:3px"></div>
+              
+            </div>
+            <div style="color:var(--muted)">Johannesburg, Gauteng ·</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right reveal">
+        <img class="profile" src="/images/profile-portfolio.jpeg" alt="Lehlogonolo Makwela">
+      </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="inner">
+        <div style="flex:1">
+          <h2 class="reveal">About</h2>
+          <p class="lead-muted reveal">I create scalable web applications using ASP.NET, C#, JavaScript and SQL Server, with an emphasis on performance, accessibility and thoughtful UX. My university projects, including G3MWL web and its  Android app as well as  Agri-Energy Connect, focus on solving real user challenges through efficient, reliable software.</p>
+        </div>
+        <div style="width:320px" class="reveal">
+          <div class="contact-card">
+            <h3 style="margin-top:0">Quick Info</h3>
+            <p style="margin:6px 0"><strong>Degree</strong><br>Bachelor of Computer and Information Science – Application Development (Final year)</p>
+            <p style="margin:6px 0"><strong>Certifications</strong><br>Android App Development with Kotlin (Udemy) · FNB app academy</p>
+            <p style="margin:6px 0"><strong>stack</strong><br> · C# · ASP.NET Core · Entity Framework · SQL Server · JS · MongoDB · Node.js & express(REST API) · Git & GitHub</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2 class="reveal">My Projects</h2>
+      <p class="lead-muted reveal">Clickable previews — open source code and demo videos available for each project.</p>
+
+      <div style="height:24px"></div>
+      <div class="grid">
+
+        <!-- Project Card 1 -->
+        <div class="card reveal">
+          <div class="thumb"><img src="/images/thumb/clinical-thumb.png" alt="CMCS"></div>
+          <h3> My first client project</h3>
+          <p>For my final year group project we had to find a real world problem and come with a solution to solve that problem, so we came across G3MWL a trial management company which was dealing with spreadsheets to record their data.</p>
+          <p>So we built a simple secure dashboard web and android app platform where they can record and track patient responses</p>
+          <p>   Tech stack: C#, ASP.NET MVC, HTML, CSS, JavaScript, MongoDB, REST API</p>
+          <div class="row">
+            <div class="tag">Web & mobile app</div>
+            <div class="actions">
+              <a class="btn-ghost" href="https://github.com/lehlogonolo-alt/G3MWL-WEBSITE-MVC.git" target="_blank"> Web Source code</a>
+              <a class="btn-ghost" href="https://github.com/lehlogonolo-alt/G3MWL-MOBILE-APP.git" target="_blank"> Mobile Source code</a>
+              <button class="btn-ghost" data-video="https://www.youtube.com/embed/Ey8af-buvVQ" onclick="openModal(this)">Web Demo</button>
+              <button class="btn-ghost" data-video="https://www.youtube.com/embed/KpB9gcI_FzE" onclick="openModal(this)">App Demo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="card reveal">
+          <div class="thumb"><img src="/images/thumb/portal-thumb.png" alt="Customer portal App"></div>
+          <h3>international customer portal</h3>
+          <p>developed a secure international payments portal where customers can send payment internationally and employees can verify and submit payments to swift.</p>
+          <p>Tech stack: React, Rest API, MongoDB</p>
+          <div class="row">
+            <div class="tag">Web app</div>
+            <div class="actions">
+              <a class="btn-ghost" href="https://github.com/lehlogonolo-alt/international-customer-portal.git" target="_blank">Source</a>
+             <button class="btn-ghost" data-video="https://www.youtube.com/embed/Xx9Bsc2USrE" onclick="openModal(this)">Demo</button>
+            </div>
+          </div>
+        </div>
+
+         <!-- Project Card 2 -->
+        <div class="card reveal">
+          <div class="thumb"><img src="/images/thumb/pine-zoo-thumb.png" alt="pine city zoo"></div>
+          <h3>Pine City Zoo App </h3>
+          <p>•	Built an interactive web application to guide visitors through zoo attractions, improving navigation and user engagement.</p>
+          <p>   Tech stack: HTML, CSS, JavaScript</p>
+          <div class="row">
+            <div class="tag">Mobile</div>
+            <div class="actions">
+              <a class="btn-ghost" href="https://github.com/lehlogonolo-alt/pine-city-zoo.git" target="_blank">Source</a>
+              <button class="btn-ghost" data-video="https://www.youtube.com/embed/WXozroFgyAU" onclick="openModal(this)">Demo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="card reveal">
+          <div class="thumb"><img src="/images/thumb/agri-thumb.png" alt="Agri Energy"></div>
+          <h3>Agri‑Energy Connect</h3>
+          <p>•	Developed a platform connecting farmers with green energy solutions, enabling product listing and employee management features. </p>
+          <p>•	Implemented secure CRUD operations for user data and optimised database queries for performance.</p>
+          <p>   Tech stack: C#, ASP.NET MVC, HTML, CSS, JavaScript</p>
+          <div class="row">
+            <div class="tag">Platform</div>
+            <div class="actions">
+              <a class="btn-ghost" href="https://github.com/VCSTDN2024/prog7311-part-2-LehlogononoloMakwela.git" target="_blank">Source</a>
+              <button class="btn-ghost" data-video="https://www.youtube.com/embed/z8i4k3d0tzI" onclick="openModal(this)">Demo</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </section>
+
+    <!-- CONTACT -->
+<section id="contact">
+  <h2 class="reveal">Contact</h2>
+  <p class="lead-muted reveal">Reach out and let's build something great.</p>
+
+  <div style="height:28px"></div>
+  <div class="contact-card reveal" style="text-align:center">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:24px">
+      <div class="contact-item">
+        <div class="icon">📧</div>
+        <div>
+          <strong>Email</strong>
+          <div style="color:var(--muted)">hlogisj@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="icon">📞</div>
+        <div>
+          <strong>Phone</strong>
+          <div style="color:var(--muted)">+27 76 787 2888</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="icon">📍</div>
+        <div>
+          <strong>Location</strong>
+          <div style="color:var(--muted)">Johannesburg, Gauteng</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <footer>
+      <div style="padding:20px 0;color:var(--muted)">© 2025 Hlogi Makwela • </div>
+    </footer>
+
+  </main>
+
+  <!-- modal -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- floating whatsapp -->
+  <a href="https://wa.me/27767872888" target="_blank" style="position:fixed;right:22px;bottom:22px;background:#25D366;color:white;padding:14px;border-radius:999px;box-shadow:0 8px 20px rgba(37,99,235,0.12);z-index:80;text-decoration:none;font-weight:700">💬 WhatsApp</a>
+
+  <script>
+    // typing effect (smart)
+    const fullText = "Hello there, I'm Lehlogonolo Makwela.👋";
+    const target = document.getElementById('typedText');
+    let i = 0;
+    function smartType(){
+      if(i <= fullText.length){
+        target.textContent = fullText.slice(0,i);
+        i++;
+        setTimeout(smartType, 80 + (Math.random()*80));
+      }
+    }
+    smartType();
+
+    // reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+    },{threshold:0.15});
+    reveals.forEach(r=>io.observe(r));
+
+    // modal for videos
+    function openModal(btn){
+    let src = btn.getAttribute('data-video');
+    if (!src.includes('embed')) {
+      const videoId = src.includes('v=') ? src.split('v=')[1].split('&')[0] : src.split('/').pop();
+      src = `https://www.youtube.com/embed/${videoId}`;
+    }
+    const backdrop = document.getElementById('modalBackdrop');
+    const content = document.getElementById('modalContent');
+    content.innerHTML = `<iframe src="${src}?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    backdrop.style.display = 'flex';
+    backdrop.setAttribute('aria-hidden','false');
+  }
+    document.getElementById('modalBackdrop').addEventListener('click', function(e){ if(e.target === this){ closeModal(); } });
+    function closeModal(){ document.getElementById('modalContent').innerHTML=''; document.getElementById('modalBackdrop').style.display='none'; document.getElementById('modalBackdrop').setAttribute('aria-hidden','true'); }
+
+    // contact form (no backend) – show toast and clear
+    document.getElementById('contactForm').addEventListener('submit', function(e){ e.preventDefault(); const btn = this.querySelector('button[type="submit"]'); const orig = btn.textContent; btn.textContent='Sending...'; setTimeout(()=>{ btn.textContent='Sent ✓'; this.reset(); setTimeout(()=>btn.textContent=orig,2200); },1200); });
+
+    // nav scroll spy
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link=>link.addEventListener('click', (ev)=>{ ev.preventDefault(); const id = link.dataset.target; document.getElementById(id).scrollIntoView({behavior:'smooth',block:'center'}); }));
+
+    const sections = ['hero','about','skills','projects','contact'];
+    window.addEventListener('scroll', ()=>{
+      const y = window.scrollY + window.innerHeight/2;
+      sections.forEach(s=>{
+        const el = document.getElementById(s);
+        if(!el) return;
+        const top = el.offsetTop;
+        const bottom = top + el.offsetHeight;
+        const link = document.querySelector(`.nav-links a[data-target="${s}"]`);
+        if(y >= top && y < bottom){ navLinks.forEach(n=>n.classList.remove('active')); if(link) link.classList.add('active'); }
+      });
+    });
+
+  </script>
+</body>
+</html>
